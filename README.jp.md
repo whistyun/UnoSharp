@@ -11,15 +11,15 @@ LibreOfficeを操作するための簡易レイヤーです。
 // new workbook
 var book1 = new Workbook();
 book1.Worksheets.Add("new sheet");
-book1.Save(@"D:\test1.ods");
+book1.SaveAs(@"D:\test1.ods");
 book1.Close();
 
 // open workbook
-using(var book2 = new Workbook(@"D:\test2.ods"))
+using (var book2 = new Workbook(@"D:\test2.ods"))
 {
     Worksheet sheet = book2.Worksheets["Sheet1"];
-    string text  = sheet.CellAt("A1").Text
-    double value = sheet.CellAt("A1").value
+    string text = sheet.CellAt("A1").Text;
+    double value = sheet.CellAt("A1").Value;
 }
 ```
 
