@@ -1,0 +1,13 @@
+.vs/
+vsdll/
+Debug/
+Release/
+TestResults/
+bin/
+obj/
+ipch/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sdf
