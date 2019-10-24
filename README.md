@@ -1,6 +1,6 @@
 # UnoSharp
 
-UnoSharp is the simple layer to operate LibreOffice by Universal Network Objects (hereinafter UNO).
+UnoSharp is the simple wrapper to operate LibreOffice by Universal Network Objects (hereinafter UNO).
 
 Classes and Methods are somewhat similar to the Microsoft Office Excel model.
 

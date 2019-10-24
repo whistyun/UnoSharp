@@ -1,17 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using UnoSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnoSharp.Tests
 {
-    [TestClass()]
     public class CellAddressUtilTests
     {
-        [TestMethod()]
+        [Test]
         public void ConvertDateToValueTest()
         {
             var nullDate = new DateTime(1899, 12, 30);
@@ -44,8 +39,7 @@ namespace UnoSharp.Tests
             }
         }
 
-
-        [TestMethod()]
+        [Test]
         public void ConvertValueToDateTest()
         {
             var nullDate = new DateTime(1899, 12, 30);
@@ -78,7 +72,7 @@ namespace UnoSharp.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void CovertIndexToColumnLabelTest()
         {
             int[] inputs = {
@@ -110,7 +104,7 @@ namespace UnoSharp.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void ConvertColumnLabelToIndexTest()
         {
             int[] expecteds = {

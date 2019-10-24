@@ -1,18 +1,23 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using UnoSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Threading;
+using System.Reflection;
 
 namespace UnoSharp.Tests
 {
-    [TestClass()]
     public class WorkbookTests
     {
-        [TestMethod()]
+        [SetUp]
+        public void Setup()
+        {
+            Assembly myAssembly = typeof(WorkbookTests).Assembly;
+            string path = myAssembly.Location;
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(path));
+        }
+
+        [Test]
         public void WorkbookTestOpen()
         {
             using (var book = new Workbook()) ;
@@ -27,7 +32,7 @@ namespace UnoSharp.Tests
             catch (FileNotFoundException e) { }
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookSaveAsTest()
         {
             using (var book = new Workbook())
@@ -38,7 +43,7 @@ namespace UnoSharp.Tests
             Assert.IsTrue(File.Exists("save.ods"));
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookSaveTest()
         {
             var firstLastWriteTime = File.GetLastWriteTime("TestForSave.ods");
@@ -52,7 +57,7 @@ namespace UnoSharp.Tests
             Assert.IsTrue(firstLastWriteTime < File.GetLastWriteTime("TestForSave.ods"));
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookSheetTest()
         {
             using (var book = new Workbook())
@@ -85,7 +90,7 @@ namespace UnoSharp.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookSheetTest2()
         {
             using (var book = new Workbook("TestForSheet.ods"))
@@ -103,7 +108,7 @@ namespace UnoSharp.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookReadTest()
         {
             using (var book = new Workbook("TestForRead.ods"))
@@ -140,7 +145,7 @@ namespace UnoSharp.Tests
 
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookReadRangeTest()
         {
             using (var book = new Workbook("TestForRead.ods"))
@@ -168,7 +173,7 @@ namespace UnoSharp.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookReadWriteRange2Test()
         {
             using (var book = new Workbook())
@@ -183,7 +188,7 @@ namespace UnoSharp.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void WorkbookReadWriteRangeTest()
         {
             using (var book = new Workbook("TestForRead.ods"))
@@ -215,6 +220,33 @@ namespace UnoSharp.Tests
             }
         }
 
+
+        [Test]
+        public void WorkbookUseRangeTest()
+        {
+            using (var book = new Workbook("TestForRange.ods"))
+            {
+                var
+                rnt = book.Worksheets["Sheet0"].UsedRange;
+                Assert.AreEqual(2, rnt.Column0);
+                Assert.AreEqual(7, rnt.Row0);
+                Assert.AreEqual(4, rnt.ColumnCount);
+                Assert.AreEqual(5, rnt.RowCount);
+
+                rnt = book.Worksheets["Sheet1"].UsedRange;
+                Assert.AreEqual(0, rnt.Column0);
+                Assert.AreEqual(0, rnt.Row0);
+                Assert.AreEqual(6, rnt.ColumnCount);
+                Assert.AreEqual(24, rnt.RowCount);
+
+                rnt = book.Worksheets["Sheet2"].UsedRange;
+                Assert.AreEqual(0, rnt.Column0);
+                Assert.AreEqual(0, rnt.Row0);
+                Assert.AreEqual(3, rnt.ColumnCount);
+                Assert.AreEqual(15, rnt.RowCount);
+
+            }
+        }
 
         private void MatchArray2(object[][] expecteds, object[][] inputs)
         {
