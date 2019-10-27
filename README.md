@@ -27,4 +27,5 @@ using (var book2 = new Workbook(@"D:\test2.ods"))
 To use UnoSharp, We should install LibreOffice and LibreOffice SDK.
 Please match 64bit or 32bit with the application to be executed: If you use 64bit application, choose 64bit LibreOffice.
 
-If you execute AnyCPU application on 64bit system, and are not sure whether it will work on 64bit, I recommend to install both 32bit and 64bit.
+~~If you execute AnyCPU application on 64bit system, and are not sure whether it will work on 64bit, I recommend to install both 32bit and 64bit.~~
+Unfortunately, We cannot install both 32bit and 64bit (otherhand is removed), So if you execute Any CPU application on 64bit system, UnoSharp is throw exception in some case.
