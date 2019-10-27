@@ -60,7 +60,6 @@ namespace UnoSharp
                 if ((FormatTypeBit & value) != value)
                 {
                     // https://wiki.openoffice.org/wiki/Documentation/DevGuide/OfficeDev/Applying_Number_Formats
-
                     var nft = (XNumberFormatTypes)Workbook.FormatsSupplier.getNumberFormats();
                     var fmt = nft.getStandardFormat(value, new Locale());
                     ((XPropertySet)Peer).setPropertyValue("NumberFormat", new Any(fmt));

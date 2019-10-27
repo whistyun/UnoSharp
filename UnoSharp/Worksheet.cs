@@ -57,6 +57,23 @@ namespace UnoSharp
             }
         }
 
+        public Cell LastCell
+        {
+            get
+            {
+                var cursor = Peer.createCursor();
+
+                var xuacursor = (XUsedAreaCursor)cursor;
+                xuacursor.gotoStartOfUsedArea(false);
+                xuacursor.gotoEndOfUsedArea(true);
+
+                var address = ((XCellRangeAddressable)cursor).getRangeAddress();
+                // 注：Excelと異なり、0-base
+                // see: https://wiki.openoffice.org/wiki/Documentation/BASIC_Guide/Cells_and_Ranges
+                return CellAt(address.EndRow, address.EndColumn);
+            }
+        }
+
         public Range this[string address]
         {
             get { return Range(address); }
@@ -103,6 +120,7 @@ namespace UnoSharp
             else throw new FormatException();
 
         }
+
         public Cell CellAt(int row0, int col0)
         {
             return new Cell(this, row0, col0);
@@ -111,6 +129,35 @@ namespace UnoSharp
         public Cell this[int r, int c]
         {
             get { return CellAt(r, c); }
+        }
+
+        public TypedRange BuildRange(string address, bool ignoreFormat, params Type[] columnTypes)
+        {
+            var match = ptn1.Match(address);
+            if (match.Success)
+            {
+                return BuildRange(
+                    int.Parse(match.Groups[2].Value) - 1,
+                    Utils.ConvertColumnLabelToIndex(match.Groups[1].Value),
+                    ignoreFormat,
+                    columnTypes);
+            }
+            else throw new FormatException();
+        }
+
+        public TypedRange BuildRange(string address, params Type[] columnTypes)
+        {
+            return BuildRange(address, false, columnTypes);
+        }
+
+        public TypedRange BuildRange(int row0, int col0, params Type[] columnTypes)
+        {
+            return BuildRange(row0, col0, false, columnTypes);
+        }
+
+        public TypedRange BuildRange(int row0, int col0, bool ignoreFormat, params Type[] columnTypes)
+        {
+            return new TypedRange(this, row0, col0, columnTypes, ignoreFormat);
         }
     }
 }

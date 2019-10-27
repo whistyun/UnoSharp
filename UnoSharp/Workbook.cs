@@ -20,6 +20,8 @@ namespace UnoSharp
 
         private Uri savedFile;
 
+        public bool SaveWhenClosing { set; get; }
+
         private Workbook(Uri uri)
         {
             if (uri.Scheme.ToLower() == "file")
@@ -59,9 +61,11 @@ namespace UnoSharp
         /// Open workbook.
         /// </summary>
         /// <param name="filepath">The file's path to open</param>
-        public Workbook(string filepath) : this(new Uri(Path.GetFullPath(filepath)))
+        /// <param name="saveWhenClosing">Wheither save-method is called when this workbook is closed</param>
+        public Workbook(string filepath, bool saveWhenClosing = false) : this(new Uri(Path.GetFullPath(filepath)))
         {
             savedFile = new Uri(Path.GetFullPath(filepath));
+            SaveWhenClosing = saveWhenClosing;
         }
 
         /// <summary>
@@ -104,6 +108,9 @@ namespace UnoSharp
         {
             if (!closed)
             {
+                if (!closed && SaveWhenClosing && savedFile != null)
+                    Save();
+
                 closePeer.close(false);
                 closed = true;
             }
