@@ -31,4 +31,7 @@ UnoSharpを使用するには、LibreOffice本体と、LibreOffice SDKが必要�
 
 AnyCPUでアプリケーションをビルドする場合、64bit環境では、「32bit優先」でビルドするか否かにより、32bitで動くか64bitで動くか変わります。「32bit優先」でも、そのアプリを別のアプリが呼び出す場合、64bitで動作する可能性があります(例えば、別のアプリが64bitの場合)。
 
-32bitと64bitの何方で動作するか確信が持てない場合は、32bit版と64bit版の両方のLibreOfficeとSDKをインストールしてください。
+~~32bitと64bitの何方で動作するか確信が持てない場合は、32bit版と64bit版の両方のLibreOfficeとSDKをインストールしてください。~~
+LibreOfficeは32bitと64bitを同時にインストールすることができないため、UnoSharpを使用するアプリケーションをAnyCPUでのコンパイルは推奨しません。
+
+LibreOfficeが32bitなら32bitとして、64bitなら64bitとしてビルドしてください。
